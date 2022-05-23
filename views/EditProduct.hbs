@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldRoad後台</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+   <section id="header">
+        <a href="/"><img src="../photo/OldRoadLogosmall.jpg"  alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <button><li><a href="/">首頁</a></li></button>
+                <button><li><a href="/admin/addproduct" >新增商品</a></li></button>
+                <button><li><a href="/admin/allproducts" class="active">商品管理</a></li></button>
+                <button><li><a href="/admin/allcheckouts" >訂單追蹤</a></button></li>
+                <button><li><a href="/signout">登出</a></li></button>
+            </ul>
+        </div>
+    </section>
+
+    <section id="SectionAddProductForm" class="section-p1">
+
+        <form action="/EditProduct/{{products._id}}" method="POST" enctype="multipart/form-data"  class="adminAddForm">
+            <h2>Edit Products</h2>
+            <div><span style="color: rgb(183, 6, 6);">{{EditedProductText}}</span></div>
+            <div class="addbox"><label for="">title:</label><input type="text" name="title" placeholder="請輸入商品名稱" value="{{products.title}}" required></div>
+            <div class="addbox"><label for="">class:</label>
+                <select name="productclass" id="productclass">
+                    <option>{{products.productclass}}</option>
+                    <option>coats</option>
+                    <option>shirts</option>
+                    <option>pants</option>
+                    <option>accessories</option>
+                  </select>
+            </div>
+
+
+            {{#each products.color}}
+            <div class="addbox"> <label for="div">color:</label><input type="text" name="color" placeholder="請輸入顏色" value="{{this}}"required></div>
+            {{/each}}
+            <p id="newcolor1"></p>
+            <button type="button" class="addcolor1" onclick="AddColor()">new color</button>
+             <p id="newcolor2"></p>
+             <button type="button" class="addcolor2" onclick="AddColor2()" style="display: none;">new color</button>
+
+             {{#each products.size}}
+            <div class="addbox"><label for="">size:</label><select name="size" id="size">
+                <option value="{{this}}">{{this}}</option>   
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select></div>
+            {{/each}}
+            <p id="newsize1"></p>
+            <button type="button" class="addsize1" onclick="AddSize()">new size</button>
+             <p id="newsize2"></p>
+            <button type="button" class="addsize2" onclick="AddSize2()" style="display: none;">new size</button>
+
+
+            <div class="addbox"><label for="">price:</label><input type="number" name="price" placeholder="請輸入價格" value="{{products.price}}" required></div>
+            <div class="description"><label for="">description:</label><textarea name="description" placeholder="請輸入商品描述" cols="30" rows="10" required>{{products.description}}</textarea></div>
+            <div class="ImageFileUpload"><input type="file" name="imagefile" multiple="multiple" value="" accept="image/*" onchange="loadfile(event)" ></div>
+            <div class="loadfile">
+                <img id="output" />
+                <img id="output" />
+                <img id="output" />
+                <img id="output" />
+            </div>
+            <div><button type="submit">submit</button></div>
+        </form>
+        
+    </section>
+
+
+
+    <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/admin/addproduct" >新增商品</a>
+            <a href="/admin/allproducts" >商品管理</a>
+            <a href="/admin/allcheckouts" class="active">訂單追蹤</a>
+            <a href="/signout">登出</a>
+        </div>
+
+    </footer>
+
+
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldRoad後台</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+      <section id="header">
+        <a href="/"><img src="photo/OldRoadLogosmall.jpg" alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <form action="/" method="get"><button> <li><a >首頁</a></li></button></form>
+                <form action="/store" method="get"><button ><li><a>所有商品</a></li></button></form> 
+                {{#if USERALL}}
+                
+                <form action="/account" method="get"><li><button><a>
+                        hi!{{USERALL.name}}</a></button></li></form>
+                 <form action="/userOrder/{{USERALL._id}}" method="GET"><li><button><a class="active">我的訂單</a></button></li></form>
+                {{else}}
+               
+                <form action="/account" method="get"><li><button><a >
+                        登入</a></button></li></form>
+                {{/if}}
+               
+                <form action="/admin" method="get"><li><button><a>後台管理<a></button></li></form>
+                <form action="/cart" method="get"><button><li><a><i class="fa fa-shopping-bag"></i></a></li></button></form>
+                <div class="CartNumber" name="CartQuantity"><input type="hidden" value="{{USERALL._id}}" name="id"><span name="CartQuantity">0</span></div>
+
+            </ul>
+        </div>
+    </section>
+
+    {{#if myorders}}
+    <section id="AllCheckoutTable" class="section-p1">
+        <table width="100%">
+            <thead class="rd">
+                <tr>
+                    <td><h5>訂單編號</h5></td>
+                    <td><h5>商品</h5></td>
+                    <td><h5>總金額</h5></td>
+                    <td><h5>付款方式</h5></td>
+                    <td><h5>備註</h5></td>
+                    <td><h5>物流狀態</h5></td>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {{#each myorders}}
+                <tr class="CheckoutTbody">
+                    <td><p>{{this._id}}</p></td>
+
+                    <td id="OrdersIcon"><p><a onclick="OpenOrdersContent({{@index}})">
+                        <i class="fa-solid fa-square-poll-horizontal"></i>
+                        </a></p></td>
+                    <td id="OrdersContent" style="display: none;">
+                        {{#each this.orders}}
+                        <img src="{{this.mainimg}}[0]">
+                        <p>{{this.title}}({{this.color}}{{this.size}})*{{this.quantity}}</p>
+                        {{/each}}
+                        <p>
+                        <button onclick="BackOrdersIcon({{@index}})">cancel</button>
+                        </p>
+                    </td>
+
+                    <td><p>{{this.total}}</p></td>
+                    <td><p>{{this.payment}}</p></td>
+
+                    <td class="PSicon"><p><a onclick="OpenPSContent({{@index}})"><i class="fa-solid fa-square-poll-horizontal"></i></a></p></td>
+                    <td class="PScontent" style="display: none;"><p>{{this.PS}}<button onclick="BackPSIcon({{@index}})">cancel</button></p></td>
+
+                    <td><p>{{this.cargo}}</p></td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </section>
+    {{else}}
+        <section id="cartpage-header">
+        <h2>You do not have any orders.</h2>
+        <h1><a href="/store" class="NothingInCart">go shop now</a></h1>
+        
+    </section>
+    {{/if}}
+
+ <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/store">所有商品</a>
+            {{#if USERALL}}
+            <a href="/account">會員資料</a>
+            <a href="/userOrder/{{USERALL._id}}">我的訂單</a>
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺管理</a>
+            <a href="/signout">登出</a>
+            {{else}}
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺登入</a>
+            <a href="/account">登入</a>
+            {{/if}}
+        </div>
+
+    </footer>
+
+
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古路OldRoad</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="CartQuantity()">
+
+     <section id="header">
+        <a href="/"><img src="photo/OldRoadLogosmall.jpg" alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <form action="/" method="get"><button> <li><a >首頁</a></li></button></form>
+                <form action="/store" method="get"><button ><li><a>所有商品</a></li></button></form> 
+                {{#if USERALL}}
+                
+                <form action="/account" method="get"><li><button><a >
+                        hi!{{USERALL.name}}</a></button></li></form>
+                <form action="/userOrder/{{USERALL._id}}" method="GET"><li><button><a>我的訂單</a></button></li></form>
+                {{else}}
+                <form action="/register" method="get"><button><li><a class="active">註冊</a></li></button></form>
+                
+                {{/if}}
+                <form action="/admin" method="get"><li><button><a>後台管理<a></button></li></form>
+                <form action="/cart" method="get"><button><li><a><i class="fa fa-shopping-bag"></i></a></li></button></form>
+                <div class="CartNumber" name="CartQuantity"><input type="hidden" value="{{USERALL._id}}" name="id"><span name="CartQuantity">0</span></div>
+
+            </ul>
+        </div>
+    </section>
+
+
+    <section id="account-form" class="section-p1">
+        {{#if USERALL}}
+        <form action="/AccountEdit/{{USERALL._id}}" method="POST" class="register-form" onsubmit="return AccountEditcheck(this);">
+            <div class="account-header">
+                <h2>account register</h2>
+            </div>
+            <span style="color: rgb(182, 23, 23);">{{BackendSameEmail}}</span>
+            <input type="text" placeholder="請輸入您的名字" name="name" required value="{{USERALL.name}}" onchange="checkname()"><span id="checkname"></span>
+            <input type="text" placeholder="請輸入您的電話" name="phone" required value="{{USERALL.phone}}" onchange="checkphone()"><span id="checkphone"></span>
+            <input type="date" placeholder="請輸入您的生日" name="birthday" value="{{USERALL.birthday}}" required>
+            <input type="text" placeholder="請輸入您的地址" name="address" value="{{USERALL.address}}" required>
+            <input type="password" placeholder="請輸入密碼" name="password" required onchange="firstcheckpassword()"><span id="firstcheckpassword"></span>
+            <input type="password" placeholder="再次確認密碼" name="confirmpassword" required onchange="checkpassword()"><span id="checkpasswordtext"></span>
+            <button type="submit" class="normal">confirm</button>
+        </form>
+        {{else}}
+        {{#if VerifyEmail}}
+        <form action="/CheckCode" method="POST" class="CheckCode-form" onsubmit="return CheckCode(this);">
+            <div class="account-header">
+                <h2>E-mail check</h2>
+            </div>
+            <input type="text" value="{{VerifyEmail}}" name="CheckCodeEmail" readonly>
+            <input type="text" placeholder="請輸入驗證碼" name="InputCheckCode" onchange="CheckCode()"><span id="AfterCheckCode">{{checkcodetext}}</span>
+            <button type="submit" class="normal">verify</button>
+        </form>
+        {{else}}
+        <form action="/register" method="POST" class="register-form" onsubmit="return check(this);">
+            <div class="account-header">
+                <h2>account register</h2>
+            </div>
+            <span style="color: rgb(182, 23, 23);">{{BackendSameEmail}}</span>
+            <input type="text" placeholder="請輸入您的名字" name="name" required onchange="checkname()"><span id="checkname"></span>
+            <input type="text" placeholder="請輸入您的電話" name="phone" required onchange="checkphone()"><span id="checkphone"></span>
+            <input type="date" placeholder="請輸入您的生日" name="birthday" required>
+            <input type="text" placeholder="請輸入您的地址" name="address" required>
+            <input type="email" placeholder="請輸入您的信箱" name="email" required onchange="checkemail()"><span id="CheckEmailText"></span>
+            <input type="password" placeholder="請輸入密碼" name="password" required onchange="firstcheckpassword()"><span id="firstcheckpassword"></span>
+            <input type="password" placeholder="再次確認密碼" name="confirmpassword" required onchange="checkpassword()"><span id="checkpasswordtext"></span>
+            <button type="submit" class="normal">confirm</button>
+            <a class="GoBackAccount" href="/account">sign in</a>
+        </form>
+        {{/if}}
+        {{/if}}
+    </section>
+
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sigh Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers<span>.</p>
+        </div>
+        <div class="emailform">
+            <input type="text" placeholder="your email">
+            <button class="normal">Sign Up</button>
+        </div>
+    </section>
+
+ <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/store">所有商品</a>
+            {{#if USERALL}}
+            <a href="/account">會員資料</a>
+            <a href="/userOrder/{{USERALL._id}}">我的訂單</a>
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺管理</a>
+            <a href="/signout">登出</a>
+            {{else}}
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺登入</a>
+            <a href="/account">登入</a>
+            {{/if}}
+        </div>
+
+    </footer>
+
+
+    <script src="../script.js"></script>
+    <script src="../server.js"></script>
+    
+</body>
+
+</html>

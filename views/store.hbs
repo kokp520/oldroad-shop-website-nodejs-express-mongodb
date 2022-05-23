@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古路OldRoad</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="CartQuantity()">
+
+     <section id="header">
+        <a href="/"><img src="photo/OldRoadLogosmall.jpg" alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <form action="/" method="get"><button> <li><a >首頁</a></li></button></form>
+                <form action="/store" method="get"><button ><li><a class="active">所有商品</a></li></button></form> 
+                {{#if USERALL}}
+                
+                <form action="/account" method="get"><li><button><a>
+                        hi!{{USERALL.name}}</a></button></li></form>
+                        <form action="/userOrder/{{USERALL._id}}" method="GET"><li><button><a>我的訂單</a></button></li></form>
+                {{else}}
+               
+                <form action="/account" method="get"><li><button><a >
+                        登入</a></button></li></form>
+                {{/if}}
+                <form action="/admin" method="get"><li><button><a>後台管理<a></button></li></form>
+                <form action="/cart" method="get"><button><li><a><i class="fa fa-shopping-bag"></i></a></li></button></form>
+                <div class="CartNumber" name="CartQuantity"><input type="hidden" value="{{USERALL._id}}" name="id"><span name="CartQuantity">0</span></div>
+
+            </ul>
+        </div>
+    </section>
+
+    <section id="storepage-header">
+        <h2>Vintage designer</h2>
+        <h1>looking the latest drops</h1>
+    </section>
+
+  
+   <section id="product1">
+        <h2>All products</h2>
+        <p>buy one,get one up to 50%</p>
+        <div class="pro-container">
+            {{#each store1 }}
+            <form action="/singleproduct/{{this._id}}" method="GET">
+            <div class="pro">
+                <button type="submbit"><img src="{{this.image}}[0]" alt="">
+                <div class="des">
+                    <span>{{this.productclass}}</span>
+                    <h5>{{this.title}}</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>${{this.price}}</h4>
+                </div>
+                <i class="fa-solid fa-cart-shopping cart"></i>
+                </button>
+                </form>
+            </div>
+                
+            {{/each}}
+          
+    </section>
+    {{!-- 商品多頁 --}}
+    {{!-- <section id="pagination" class="section-p1">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#"><i class="fa-solid fa-angles-right"></i></a>
+    </section> --}}
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sigh Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers<span>.</p>
+        </div>
+        <div class="emailform">
+            <input type="text" placeholder="your email">
+            <button class="normal">Sign Up</button>
+        </div>
+    </section>
+
+      <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/store">所有商品</a>
+            {{#if USERALL}}
+            <a href="/account">會員資料</a>
+            <a href="/userOrder/{{USERALL._id}}">我的訂單</a>
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺管理</a>
+            <a href="/signout">登出</a>
+            {{else}}
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺登入</a>
+            <a href="/account">登入</a>
+            {{/if}}
+        </div>
+
+    </footer>
+
+
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

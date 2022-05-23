@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldRoad後台</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="quantityChange(),CartQuantity(),AllTotal()">
+
+    <section id="header">
+       <a href="/"><img src="../photo/OldRoadLogosmall.jpg" alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <form action="/" method="get"><button> <li><a >首頁</a></li></button></form>
+                <form action="/store" method="get"><button ><li><a>所有商品</a></li></button></form> 
+               
+                {{#if USERALL}}
+                <form action="/account" method="get"><li><button><a>
+                        hi!{{USERALL.name}}</a></button></li></form>
+                <form action="/userOrder/{{USERALL._id}}" method="GET"><li><button><a>我的訂單</a></button></li></form>
+                {{else}}
+                <form action="/account" method="get"><li><button><a>
+                        登入</a></button></li></form>
+                {{/if}}
+                <form action="/admin" method="get"><li><button><a>後台管理<a></button></li></form>
+                <form action="/cart" method="get"><button><li><a class="active"><i class="fa fa-shopping-bag"></i></a></li></button></form>
+                 <div class="CartNumber"  name="CartQuantity"><input type="hidden" value="{{USERALL._id}}" name="id"><span name="CartQuantity">0</span></div>
+            </ul>
+        </div>
+    </section>
+
+
+    <section id="recipient" class="section-p1" style="display: none;">
+        <form action="/checkout" method="POST" name="checkout">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>same account</td>
+                    <td>recipient name</td>
+                    <td>recipient phone</td>
+                    <td>recipient address</td>
+                    <td>payment</td>
+                    <td>P.S</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <input type="hidden" value="{{USERALL._id}}" name="userID">
+                    <td><input type="checkbox" onchange="SameAccount()" id="CheckBoxSameAccount"></td>
+                    <td><input type="text" name="RecipientName"></td>
+                    <td><input type="text" name="RecipientPhone"></td>
+                    <td><input type="text" name="RecipientAddress"></td>
+                    <td>
+                        <select name="payment" >
+                        <option value="貨到付款">貨到付款</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="PS"></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    {{#if orders}}
+    <section id="AllOrders" class="section-p1">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>delete</td>
+                    <td>image</td>
+                    <td>title</td>
+                    <td>size</td>
+                    <td>color</td>
+                    <td>price</td>
+                    <td>quantity</td>
+                    <td>total</td>
+                </tr>
+
+            </thead>
+          
+            <tbody>
+                {{#each orders}}
+
+                 <tr>
+                    <td><a href="deleteOrder/{{this._id}}" class="deletebutton"><i class="far fa-times-circle"></i></a></td>
+                   
+                    <td class="imgtd"><img src="{{this.mainimg}}[0]" alt=""></td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.size}}</td>
+                    <td>{{this.color}}</td>
+                    <td><input type="hidden" value="{{this.price}}" ><span name="thisprice" value="{{this.price}}">{{this.price}}</span></td>
+                    <td class="imgtd"><input type="number" value="{{this.quantity}}" onchange="quantityChange(),AllTotal()" name="thisquantity" min="1"></td>
+                    <td><span type="Number" name="subtotal"></span></td>
+                </tr>
+                
+                {{/each}}
+            </tbody>
+        </table>
+    </section>
+    
+
+    <section id="CouponAndTotal" class="section-p1">
+        <div class="coupon">
+            <h2>apply your coupon</h2>
+            <input type="text" placeholder="請輸入優惠碼">
+            <button type="button" class="apply">apply</button>            
+        </div>
+        <div class="total">
+            <h2>cart total</h2>
+            <table>
+                <tr>
+                   <td class="head">小計</td>
+                    <td><span name="total"></span></td>
+                </tr>
+                <tr>
+                    <td class="head">運費</td>
+                    <td><span name="ship">60</span></td>
+                </tr>
+                <tr>
+                    <td class="head"><strong>總計</strong></td>
+                    <td><strong><span name="alltotalspan"></span><input type="hidden" name="alltotal" value=""><strong></td>
+                </tr>
+                <button type="button" class="checkout" onclick="GoRecipient()" id="NEXT">NEXT</button>
+                <button type="submit" class="checkout" id="checkout1" style="display: none;">NEXT</button>
+                </form>
+                    
+            </table>
+             
+            
+        </div>
+        
+    </section>
+    
+    {{else}}
+    <section id="cartpage-header">
+        <h2>Nothing in the cart</h2>
+        <h1><a href="/store" class="NothingInCart">go shop now</a></h1>
+        
+    </section>
+    {{/if}}
+
+ <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/store">所有商品</a>
+            {{#if USERALL}}
+            <a href="/account">會員資料</a>
+            <a href="/userOrder/{{USERALL._id}}">我的訂單</a>
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺管理</a>
+            <a href="/signout">登出</a>
+            {{else}}
+            <a href="/cart">購物車</a>
+            <a href="/admin">後臺登入</a>
+            <a href="/account">登入</a>
+            {{/if}}
+        </div>
+
+    </footer>
+
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

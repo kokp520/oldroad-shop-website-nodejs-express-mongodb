@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldRoad後台</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/5471a1ea42.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <section id="header">
+        <a href="/"><img src="../photo/OldRoadLogosmall.jpg"  alt=""></a>
+
+        <div>
+            <ul id="navbar">
+                <button><li><a href="/">首頁</a></li></button>
+                <button><li><a href="/admin/addproduct" >新增商品</a></li></button>
+                <button><li><a href="/admin/allproducts" >商品管理</a></li></button>
+                <button><li><a href="/admin/allcheckouts" class="active">訂單追蹤</a></button></li>
+                <button><li><a href="/signout">登出</a></li></button>
+            </ul>
+        </div>
+    </section>
+
+    <section id="AllCheckoutTable" class="section-p1">
+        <table width="100%">
+            <thead class="rd">
+                <tr>
+                    <td><h5>訂單編號</h5></td>
+                    <td><h5>會員編號</h5></td>
+                    <td><h5>收件人</h5></td>
+                    <td><h5>地址</h5></td>
+                    <td><h5>手機</h5></td>
+                    <td><h5>付款方式</h5></td>
+                    <td><h5>內容</h5></td>
+                    <td><h5>總金額</h5></td>
+                    <td><h5>備註</h5></td>
+                    <td><h5>狀態</h5></td>
+                    <td><h5>刪除</h5></td>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {{#each CHECKOUTMOD}}
+                <tr class="CheckoutTbody">
+                    <td><p>{{this._id}}</p></td>
+                    <td><p>{{this.userid}}</p></td>
+                    <td><p>{{this.RecipientName}}</p></td>
+                    <td><p>{{this.RecipientAddress}}</p></td>
+                    <td><p>{{this.RecipientPhone}}</p></td>
+                    <td><p>{{this.payment}}</p></td>
+
+
+                    <td id="OrdersIcon"><p><a onclick="OpenOrdersContent({{@index}})">
+                        <i class="fa-solid fa-square-poll-horizontal"></i>
+                        </a></p></td>
+                    <td id="OrdersContent" style="display: none;">
+                        {{#each this.orders}}
+                        <img src="{{this.mainimg}}[0]">
+                        <p>{{this.title}}({{this.color}}{{this.size}})*{{this.quantity}}</p>
+                        {{/each}}
+                        <p>
+                        <button class="cancelbutton" onclick="BackOrdersIcon({{@index}})">cancel</button>
+                        </p>
+                    </td>
+                    <td><p>{{this.total}}</p></td>
+                    <td class="PSicon"><p><a onclick="OpenPSContent({{@index}})"><i class="fa-solid fa-square-poll-horizontal"></i></a></p></td>
+                    <td class="PScontent" style="display: none;"><p>{{this.PS}}<button class="cancelbutton" onclick="BackPSIcon({{@index}})">cancel</button></p></td>
+                    <td class="cargoSelect">
+                        <form action="/CargoChange/{{this._id}}" method="POST">
+                        <p><select name="CargoChange" id="CargoChange">
+                        <option value="{{this.cargo}}">{{this.cargo}}</option>
+                        <option value="未出貨">未出貨</option>
+                        <option value="備貨中">備貨中</option>
+                        <option value="已出貨">已出貨</option>
+                        </select>
+                        <button type="submit">修改</button>
+                        </p>
+                        </form></td>
+                         <form action="/deleteCheckout/{{this._id}}" method="GET">
+                    <td><button class="deletebutton" type="submit"><i class="fa-solid fa-ban"></i></button></td>
+                </form>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img src="../photo/OldRoadLogosmall.jpg" alt="">
+            <h4>contact</h4>
+            <p><strong>e-mail:</strong>kokp520@gmail.com</p>
+            <p><strong>phone:</strong>0979264850</p>
+            <p><strong>service hours:</strong>10:00am-8:00pm</p>
+            <div class="follow">
+                <h4>follow us</h4>
+                <div class="icon">
+                    <a href="https://www.facebook.com/kokp520"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/jimwu__/"><i class="fa-brands fa-instagram"></i></a>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>about us</h4>
+            <p>share the vintage spirit to all love this culture!</p>
+            <p>if you want to tell us something welcome contact us.</p>
+        </div>
+        <div class="col">
+            <h4>my account</h4>
+            <a href="/">首頁</a>
+            <a href="/admin/addproduct" >新增商品</a>
+            <a href="/admin/allproducts" >商品管理</a>
+            <a href="/admin/allcheckouts" class="active">訂單追蹤</a>
+            <a href="/signout">登出</a>
+        </div>
+
+    </footer>
+
+
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
