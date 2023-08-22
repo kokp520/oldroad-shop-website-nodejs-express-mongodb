@@ -11,9 +11,9 @@ const config = {
 
 const transporter = nodemailer.createTransport(config);
 
-const NodemailerSend = function(mail){
-    transporter.sendMail(mail, function(err, info){
-        if(err) {
+const NodemailerSend = function (mail) {
+    transporter.sendMail(mail, function (err, info) {
+        if (err) {
             return console.log(err);
         }
         console.log('mail sent success:', info.response);
