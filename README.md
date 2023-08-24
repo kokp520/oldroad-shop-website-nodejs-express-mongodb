@@ -1,7 +1,10 @@
 # OldroadWebsite | website | SHOP | Nodejs | Express | MongoDB
 
+## Demo
 This is a project about fashion product shopping
-![展示影片](https://www.youtube.com/watch?v=HaLf6bgQ--U)
+
+[![展示影片](https://img.youtube.com/vi/HaLf6bgQ--U/0.jpg)](https://www.youtube.com/watch?v=HaLf6bgQ--U)
+
 
 ## Description
 This project is a fashion product shopping website where users can browse different categories of fashion items such as clothing, pants, accessories, and more. 
