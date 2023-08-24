@@ -3,7 +3,7 @@
 ## Demo
 This is a project about fashion product shopping
 
-[![展示影片](https://img.youtube.com/vi/HaLf6bgQ--U/0.jpg)](https://www.youtube.com/watch?v=HaLf6bgQ--U)
+[Demo](https://www.youtube.com/watch?v=HaLf6bgQ--U)
 
 
 ## Description
